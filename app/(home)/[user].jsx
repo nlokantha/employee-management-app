@@ -1,8 +1,9 @@
-import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+import { Alert, Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 import React, { useState } from "react";
-import { useLocalSearchParams } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import moment from "moment";
 import { AntDesign, Entypo, FontAwesome5 } from "@expo/vector-icons";
+import axios from "axios";
 
 const User = () => {
 
@@ -27,10 +28,23 @@ const User = () => {
 
   const submitAttendence = async ()=>{
     try{
+        const attendenceData ={
+          // employeeId,employeeName,date,status
+          employeeId:id,
+          employeeName:name,
+          date:currentDate.format("MMMM D,YYYY"),
+          status:attendenceStatus
+        }
+
+        const response = await axios.post("http://192.168.202.187:3000/auth/martAttendence",attendenceData)
         
+        if(response.status == 200){
+          Alert.alert(`Attendence Submitted Successfully for ${name}`)
+        }
 
     }catch(e){
         console.log(e)
+        Alert.alert("Attendence Failed to  submitted !")
     }
   }
   return (

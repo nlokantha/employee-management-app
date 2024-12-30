@@ -6,6 +6,7 @@ router.post("/register",registerEmployee)
 router.get("/employees",fetchEmployees)
 router.post("/martAttendence",markAttendence)
 router.get("/getAttendence",getAttendence)
+router.get("/getSummaryAttendence",getAttendenceReport)
 
 
 

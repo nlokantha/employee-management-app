@@ -26,7 +26,7 @@ const AddDetails = () => {
                 address:address
             }
     
-           const response =await axios.post("http://192.168.202.187:3001/auth/register",employeeData)
+           const response =await axios.post("http://192.168.202.187:3000/auth/register",employeeData)
            if(response){
             Alert.alert("Registration Successful","You have been registered Successfully")
 

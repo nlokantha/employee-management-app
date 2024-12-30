@@ -27,7 +27,7 @@ const MarkAttendence = () => {
   const fetchEmployeeData = async () => {
     try {
       const response = await axios.get(
-        "http://192.168.202.187:3001/auth/employees"
+        "http://192.168.202.187:3000/auth/employees"
       );
       setEmployees(response.data.data);
     } catch (error) {
@@ -41,7 +41,7 @@ const MarkAttendence = () => {
   const fetchAttendenceData = async () => {
     try {
       const response = await axios.get(
-        `http://192.168.202.187:3001/auth/getAttendence`,
+        `http://192.168.202.187:3000/auth/getAttendence`,
         {
           params: {
             date: currentDate.format("MMMM D,YYYY"),
@@ -60,6 +60,16 @@ const MarkAttendence = () => {
     fetchAttendenceData();
   }, [currentDate]);
 
+  const employeeWithAttendence = employees.map((employee)=>{
+    const attendenceRecord = attendence.find((record)=>
+      record.employeeId === employee.employeeId
+    )
+
+    return {
+      ...employee,
+      status: attendenceRecord ? attendenceRecord.status : ""
+    }
+  })
   return (
     <View style={styles.container}>
       <Pressable>
@@ -82,7 +92,7 @@ const MarkAttendence = () => {
       {/* employee list */}
 
       <View style={{ marginHorizontal: 12 }}>
-        {employees.map((item, index) => (
+        {employeeWithAttendence.map((item, index) => (
           <Pressable
             onPress={() => {
               router.push({
@@ -113,12 +123,31 @@ const MarkAttendence = () => {
                 {item?.employeeName?.charAt(0)}
               </Text>
             </View>
-            <View>
+            <View style={{flex:1}}>
               <Text style={styles.nameText}>{item?.employeeName}</Text>
               <Text style={styles.designationText}>
                 {item?.designation} ({item?.employeeId})
               </Text>
             </View>
+            {
+              item?.status && (
+                <View
+              style={{
+                width: 50,
+                height: 50,
+                borderRadius: 8,
+                padding: 10,
+                backgroundColor: "#FF69B4",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Text style={styles.avatarText}>
+              {item?.status?.charAt(0).toUpperCase()}
+              </Text>
+            </View>
+              )
+            }
           </Pressable>
         ))}
       </View>
