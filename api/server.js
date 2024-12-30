@@ -5,13 +5,14 @@ const authRoutes = require("./routes/auth-routes")
 
 connectToDB()
 
-const PORT = process.env.PORT || 3000
+const PORT = process.env.PORT || 3001
 const app = express()
 
 
 app.use(express.json())
 
-app.use("/api/get",authRoutes)
+app.use("/auth",authRoutes)
+// app.use("/api/add",authRoutes)
 
 
 

@@ -63,6 +63,7 @@ const Home = () => {
               </Text>
             </Pressable>
             <Pressable
+            onPress={()=>router.push("/(home)/markAttendence")}
               style={{
                 backgroundColor: "#D3CCE3",
                 borderRadius: 6,
